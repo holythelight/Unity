@@ -1,65 +1,122 @@
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 
-public class CameraFollow : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
-	public float xMargin = 1f;      // Distance in the x axis the player can move before the camera follows.
-	public float yMargin = 1f;      // Distance in the y axis the player can move before the camera follows.
-	public float xSmooth = 8f;      // How smoothly the camera catches up with it's target movement in the x axis.
-	public float ySmooth = 8f;      // How smoothly the camera catches up with it's target movement in the y axis.
-	public Vector2 maxXAndY;        // The maximum x and y coordinates the camera can have.
-	public Vector2 minXAndY;        // The minimum x and y coordinates the camera can have.
-	private Transform player;       // Reference to the player's transform.
 
+    //角色的刚体
+    private Rigidbody2D heroRD2D;
+    //角色的heroTransform
+    private Transform heroTransform;
+    //施加的力：移动
+    public float moveForce = 100;
+    //现在的朝向
+    private bool isFaceRight = true;
+    //移动：左右
+    private float h = 0.0f;
+    //最大速度
+    public float maxSpeed = 5;
+    //是否在地面上
+    private bool beGrounded = false;
+    //Ground的heroTransform
+    private Transform GroundCheckTf;
+    //跳跃力量的大小
+    public float JumpForce = 400;
+    //能否跳跃
+    private bool canJump = false;
 
-	void Awake()
-	{
-		// Setting up the reference.
-		player = GameObject.FindGameObjectWithTag("Player").transform;
-	}
+    // Start is called before the first frame update
+    void Start()
+    {
+        heroRD2D = this.GetComponent<Rigidbody2D>();
+        GroundCheckTf = heroTransform.Find("GroundCheck");
+    }
+    void Awake()
+    {
+        //heroTransform = GameObject.FindGameObjectWithTag("Player").transform; 
+        heroTransform = this.gameObject.transform;
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
+        //获取英雄的heroTransform，这里能用this是因为这个脚本就是挂在英雄上面的
+        heroTransform = this.gameObject.transform;
 
-	bool CheckXMargin()
-	{
-		// Returns true if the distance between the camera and the player in the x axis is greater than the x margin.
-		return Mathf.Abs(transform.position.x - player.position.x) > xMargin;
-	}
+        //获取水平方向的输入：AD/← →
+        h = Input.GetAxis("Horizontal");
+        //移动
+        move();
 
+        //跳跃
+        //射线检测
+        beGrounded = Physics2D.Linecast(heroTransform.position, GroundCheckTf.position, 1 << LayerMask.NameToLayer("Ground"));
+        //检测按键
+        if (beGrounded)
+        {
+            canJump = true;
+            //Debug.Log("在地上！");
+            if (Input.GetButtonDown("Jump"))
+            {
+                //Debug.Log("开始跳跃！");
+                jump();
+            }
+        }
+    }
 
-	bool CheckYMargin()
-	{
-		// Returns true if the distance between the camera and the player in the y axis is greater than the y margin.
-		return Mathf.Abs(transform.position.y - player.position.y) > yMargin;
-	}
+    private void FixedUpdate()
+    {
+        //转身
+        //速度大于0（向右的力）并且现在朝向左，所以要转身
+        if (h > 0 && !isFaceRight)
+        {
+            flip();
+        }
+        //速度小于0（向左的力）并且现在朝向右，所以要转身
+        if (h < 0 && isFaceRight)
+        {
+            flip();
+        }
+    }
 
+    //跳跃
+    private void jump()
+    {
+        if (canJump)
+        {
+            Debug.Log("可以跳跃！");
+            heroRD2D.AddForce(new Vector2(0, 1) * JumpForce);
+            canJump = false;
+        }
+    }
 
-	void FixedUpdate()
-	{
-		TrackPlayer();
-	}
+    //移动
+    private void move()
+    {
+        //控制移动
+        if (Mathf.Abs(heroRD2D.velocity.x) < maxSpeed)
+        {
+            heroRD2D.AddForce(Vector2.right * h * moveForce);
+        }
+        //控制最高速度
+        if (Mathf.Abs(heroRD2D.velocity.x) > maxSpeed)
+        {
+            heroRD2D.velocity = new Vector2(Mathf.Sign(heroRD2D.velocity.x) * maxSpeed, heroRD2D.velocity.y);
+        }
+    }
 
+    //转身
+    private void flip()
+    {
+        //改变标志位
+        isFaceRight = !isFaceRight;
+        //得到当前的转身
+        Vector3 v3LocalScale = heroTransform.localScale;
+        //转身
+        v3LocalScale.x *= -1;
+        //设置
+        heroTransform.localScale = v3LocalScale;
+    }
 
-	void TrackPlayer()
-	{
-		// By default the target x and y coordinates of the camera are it's current x and y coordinates.
-		float targetX = transform.position.x;
-		float targetY = transform.position.y;
-
-		// If the player has moved beyond the x margin...
-		if (CheckXMargin())
-			// ... the target x coordinate should be a Lerp between the camera's current x position and the player's current x position.
-			targetX = Mathf.Lerp(transform.position.x, player.position.x, xSmooth * Time.deltaTime);
-
-		// If the player has moved beyond the y margin...
-		if (CheckYMargin())
-			// ... the target y coordinate should be a Lerp between the camera's current y position and the player's current y position.
-			targetY = Mathf.Lerp(transform.position.y, player.position.y, ySmooth * Time.deltaTime);
-
-		// The target x and y coordinates should not be larger than the maximum or smaller than the minimum.
-		targetX = Mathf.Clamp(targetX, minXAndY.x, maxXAndY.x);
-		targetY = Mathf.Clamp(targetY, minXAndY.y, maxXAndY.y);
-
-		// Set the camera's position to the target position with the same z component.
-		transform.position = new Vector3(targetX, targetY, transform.position.z);
-	}
 }
