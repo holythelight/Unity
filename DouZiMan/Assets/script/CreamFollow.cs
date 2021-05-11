@@ -19,7 +19,9 @@ public class CreamFollow : MonoBehaviour
     }
     private void Awake()
     {
-        playerTran = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTran = GameObject.FindGameObjectWithTag("Player").transform;//不能写在updata内,耗内存。
+                                                                          //FindGameObject，Transform区别：
+                                                                          //FindGameObject可以查找所有项的内容且只能调用到打开的对象，关闭的调用为空。Transform只能查找当前项内的内容且调用所有对象不管是否打开
 
     }
     bool NeedMoveX()
@@ -45,7 +47,7 @@ public class CreamFollow : MonoBehaviour
         float newY = transform.position.y;
         if (NeedMoveX())
         {
-            newX = Mathf.Lerp(transform.position.x, playerTran.position.x, speedX * Time.deltaTime);
+            newX = Mathf.Lerp(transform.position.x, playerTran.position.x, speedX * Time.deltaTime);//lerp(a,b,t):x = a+(b-a)t
         }
         if (NeedMoveY()) {
             newY = Mathf.Lerp(transform.position.y, playerTran.position.y, speedY * Time.deltaTime);
