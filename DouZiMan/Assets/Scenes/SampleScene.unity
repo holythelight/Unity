@@ -2487,8 +2487,8 @@ MonoBehaviour:
   - {fileID: 2052783593}
   - {fileID: 184725523}
   - {fileID: 1355728888}
-  fParallax: 0.4
-  layerFraction: 0.5
+  fParallax: 1
+  layerFraction: 1
   fSmooth: 5
 --- !u!1 &1352183672
 GameObject:
