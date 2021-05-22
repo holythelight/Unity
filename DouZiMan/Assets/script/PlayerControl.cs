@@ -12,7 +12,7 @@ public class PlayerControl : MonoBehaviour
     //施加的力：移动
     public float moveForce = 100;
     //现在的朝向
-    private bool isFaceRight = true;
+    public  bool isFaceRight = true;
     //移动：左右
     private float h = 0.0f;
     //最大速度
@@ -25,6 +25,9 @@ public class PlayerControl : MonoBehaviour
     public float JumpForce = 400;
     //能否跳跃
     private bool canJump = false;
+
+    public Animator player;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +46,7 @@ public class PlayerControl : MonoBehaviour
     {
         //获取英雄的heroTransform，这里能用this是因为这个脚本就是挂在英雄上面的
         heroTransform = this.gameObject.transform;
-
+        player.SetFloat("Speed", Mathf.Abs(h));
         //获取水平方向的输入：AD/← →
         h = Input.GetAxis("Horizontal");
         //移动
@@ -88,6 +91,7 @@ public class PlayerControl : MonoBehaviour
             Debug.Log("可以跳跃！");
             heroRD2D.AddForce(new Vector2(0, 1) * JumpForce);
             canJump = false;
+            player.SetTrigger("Jump");
         }
     }
 
