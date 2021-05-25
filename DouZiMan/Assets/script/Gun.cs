@@ -8,11 +8,14 @@ public class Gun : MonoBehaviour
     public float fSpeed = 10;
     public PlayerControl playCrt;
     private AudioSource ac;
+    private Animator player;
     // Start is called before the first frame update
     void Start()
     {
         playCrt = transform.root.GetComponent<PlayerControl>();
         ac = GetComponent<AudioSource>();
+        player = transform.root.gameObject.GetComponent<Animator>();
+       
     }
 
     // Update is called once per frame
@@ -22,6 +25,7 @@ public class Gun : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.Mouse0)) { }二选一获取按键
         if (Input.GetButtonDown("Fire1")) {
             ac.Play();
+            player.Play("Shoot");
             Vector3 direction = new Vector3(0, 0, 0);
             if (playCrt.isFaceRight) {
                 Rigidbody2D RocketInstance = Instantiate(rocket, transform.position, Quaternion.Euler(direction));

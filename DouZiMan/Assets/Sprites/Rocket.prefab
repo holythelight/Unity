@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 2409680105722738309}
   - component: {fileID: 1254267707438489609}
   - component: {fileID: 428274722984431218}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: "\u7C92\u5B50\u7CFB\u7EDF2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4879,11 +4879,11 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1442459683
+  m_SortingLayer: 2
+  m_SortingOrder: 1
   m_RenderMode: 0
-  m_SortMode: 0
+  m_SortMode: 4
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
@@ -10027,8 +10027,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1442459683
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

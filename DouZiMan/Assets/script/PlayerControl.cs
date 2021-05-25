@@ -62,6 +62,7 @@ public class PlayerControl : MonoBehaviour
             //Debug.Log("在地上！");
             if (Input.GetButtonDown("Jump"))
             {
+                player.SetTrigger("Jump");
                 //Debug.Log("开始跳跃！");
                 jump();
             }

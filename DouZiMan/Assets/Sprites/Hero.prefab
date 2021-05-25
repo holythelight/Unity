@@ -877,6 +877,8 @@ GameObject:
   - component: {fileID: 2122215126907078091}
   - component: {fileID: 2122215126907078088}
   - component: {fileID: -8534560278224536399}
+  - component: {fileID: 8330171551361756507}
+  - component: {fileID: 7304162672839316159}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Player
@@ -947,6 +949,7 @@ MonoBehaviour:
   isFaceRight: 1
   maxSpeed: 5
   JumpForce: 600
+  player: {fileID: 0}
 --- !u!61 &2122215126907078088
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -983,7 +986,7 @@ Animator:
   m_GameObject: {fileID: 2122215126907078084}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 71930be477f849142a18db68487cb000, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -992,6 +995,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8330171551361756507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122215126907078084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945e75d4965556445acb26cb73260f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 1, z: 0}
+--- !u!114 &7304162672839316159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122215126907078084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c869138358daec848b00510cf16e818c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtBloodPoint: 20
 --- !u!1 &2122215126909823611
 GameObject:
   m_ObjectHideFlags: 0

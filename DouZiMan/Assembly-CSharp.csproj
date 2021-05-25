@@ -62,6 +62,8 @@
     <Compile Include="Assets\script\PlayerControl.cs" />
     <Compile Include="Assets\script\Rocket.cs" />
     <Compile Include="Assets\script\BackGrounds.cs" />
+    <Compile Include="Assets\script\HealthBar.cs" />
+    <Compile Include="Assets\script\PlayerHealth.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.0f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
